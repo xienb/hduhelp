@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "关联用户";
+}
+
+@section script
+{
+    <script type="text/javascript">
+        function submitValue() {
+            var isStu = $('#radio-choice-v-1a')[0].checked;
+            var unum = $('#textinput-1')[0].value;
+            $.ajax({
+                url: '@Url.Content("~/Home/BindUser")',
+                type: 'GET',
+                dataType: 'json',
+                data: "isStu=" + isStu + "&unum=" + unum,
+                success: function (resp) {
+
+                    if (resp.success == true) {
+                        $.msgbox({
+                            closeImg: 'img/close.gif',
+                            height: 110,
+                            width: 200,
+                            content: '绑定成功!',
+                            type: 'alert'
+                        });
+                    } else {
+                        $.msgbox({
+                            closeImg: 'img/close.gif',
+                            height: 110,
+                            width: 200,
+                            content: resp.msg,
+                            type: 'alert'
+                        });
+                    }
+                },
+                error: function () {
+                }
+            });
+        }
+    </script>
+}
+<div data-role="page">
+    <div data-role="header" data-theme="f">
+        <h1>关联学号或者工号</h1>
+    </div>
+    <div data-role="content">
+        <div class="content-primary">
+            <span>请输入学号或者教师工号：</span>
+
+
+            <div data-demo-html="true">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <legend>用户类型:</legend>
+                        <input type="radio" name="radio-choice-v-1" id="radio-choice-v-1a" value="on" checked="checked">
+                        <label for="radio-choice-v-1a">学生</label>
+                        <input type="radio" name="radio-choice-v-1" id="radio-choice-v-1b" value="off">
+                        <label for="radio-choice-v-1b">教师</label>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div data-demo-html="true">
+                <div data-role="fieldcontain">
+                    <label for="textinput-1">证件号码:</label>
+                    <input type="text" name="textinput-1" id="textinput-1" placeholder="请输入学生学号或者教师工号" value="">
+                </div>
+            </div>
+
+            <div data-demo-html="true">
+                <div data-role="fieldcontain">
+                    <label for="submit-5">提交:</label>
+                    <button type="submit" id="submit-5" data-mini="true" onclick="submitValue()">绑定</button>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <div class="jqm-footer">
+        <p class="jqm-version"></p>
+        <p>Copy Right 2014 杭电实验室预约</p>
+    </div>
+</div>
